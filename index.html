@@ -9,18 +9,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--red:#E8274B;--blue:#1A3FBF;--purple:#7C2D8E;--bg:#060608;--text:#e8e4df;--muted:#7a7570;
+  --bg-rgb:6,6,8;--text-rgb:232,228,223;
+  --nav-bg:linear-gradient(to bottom,rgba(6,6,8,.97),transparent);
+  --border-soft:rgba(255,255,255,.05);--border-softer:rgba(255,255,255,.04);--border-hover:rgba(255,255,255,.4);--border-faint:rgba(255,255,255,.08);--border-faintest:rgba(255,255,255,.15);
+  --card-hover-bg:rgba(255,255,255,.02);
   --serif:'Cormorant Garamond',Georgia,serif;--mono:'DM Mono',monospace;--sans:'Outfit',sans-serif;}
+body.day-mode{--bg:#f7f5f1;--text:#0a0a0c;--muted:#4a4540;
+  --bg-rgb:247,245,241;--text-rgb:10,10,12;
+  --nav-bg:linear-gradient(to bottom,rgba(247,245,241,.97),transparent);
+  --border-soft:rgba(0,0,0,.07);--border-softer:rgba(0,0,0,.05);--border-hover:rgba(0,0,0,.5);--border-faint:rgba(0,0,0,.1);--border-faintest:rgba(0,0,0,.2);
+  --card-hover-bg:rgba(0,0,0,.025);}
+body.day-mode .headshot-body p,body.day-mode .about-rest p,body.day-mode .mentorship-cta p,body.day-mode #mentorship p{color:rgba(var(--text-rgb),.98)!important;}
+body.day-mode .edu-degree span,body.day-mode .talk-venue{color:rgba(var(--text-rgb),.75)!important;}
+body.day-mode .hero-name .first{color:var(--text);}
+body.day-mode .btn-white{background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));box-shadow:0 2px 8px rgba(232,39,75,.2);}
+body.day-mode .btn-white span{background:none;-webkit-background-clip:initial;-webkit-text-fill-color:#fff;color:#fff;}
+body.day-mode .btn-white:hover{box-shadow:0 8px 32px rgba(232,39,75,.35);}
+body.day-mode .headshot{border-color:#1a1a1c;box-shadow:0 4px 24px rgba(0,0,0,.15);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;background:#060608;}
-body{background:#060608!important;color:var(--text);font-family:var(--sans);font-weight:300;overflow-x:hidden;}
+html{scroll-behavior:smooth;background:var(--bg);}
+body{background:var(--bg)!important;color:var(--text);font-family:var(--sans);font-weight:300;overflow-x:hidden;transition:background .4s ease,color .4s ease;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.45;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:flex-end;padding:1.6rem 3rem;background:linear-gradient(to bottom,rgba(6,6,8,.97),transparent);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:flex-end;gap:2rem;padding:1.6rem 3rem;background:var(--nav-bg);transition:background .4s ease;}
 .nav-links{display:flex;gap:2rem;list-style:none;}
 .nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .3s;}
 .nav-links a:hover{color:var(--text);}
-#hero{position:relative;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:#060608;}
-#brain-canvas{position:absolute;inset:0;width:100%;height:100%;background:#060608;}
+.mode-toggle{background:none;border:1px solid var(--border-faint);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;padding:0;flex-shrink:0;}
+.mode-toggle:hover{border-color:var(--border-hover);color:var(--text);}
+.mode-toggle svg{width:14px;height:14px;}
+.mode-toggle .sun{display:none;}
+body.day-mode .mode-toggle .sun{display:block;}
+body.day-mode .mode-toggle .moon{display:none;}
+#hero{position:relative;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:var(--bg);transition:background .4s ease;}
+#brain-canvas{position:absolute;inset:0;width:100%;height:100%;background:var(--bg);transition:background .4s ease;}
 .hero-brain-space{flex:1;}
 .hero-bottom{position:relative;z-index:10;padding:0 3rem 3.5rem;display:flex;align-items:flex-end;justify-content:space-between;pointer-events:none;}
 .hero-name-block{pointer-events:none;}
@@ -35,8 +57,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:.8rem 1.8rem;border-radius:2px;transition:all .3s;}
 .btn-primary{background:linear-gradient(90deg,var(--red),var(--blue));color:#fff;}
 .btn-primary:hover{opacity:.85;transform:translateY(-1px);box-shadow:0 8px 32px rgba(232,39,75,.3);}
-.btn-ghost{border:1px solid rgba(255,255,255,.15);color:var(--muted);}
-.btn-ghost:hover{border-color:rgba(255,255,255,.4);color:var(--text);}
+.btn-ghost{border:1px solid var(--border-faintest);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--border-hover);color:var(--text);}
 .btn-white{background:#fff;border-radius:2px;padding:.8rem 1.8rem;text-decoration:none;transition:all .3s;}
 .btn-white span{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .btn-white:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(255,255,255,.18);}
@@ -54,10 +76,10 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .headshot{width:178px;height:178px;border-radius:50%;flex-shrink:0;overflow:hidden;border:3px solid #fff;box-shadow:0 4px 24px rgba(0,0,0,.4);}
 .headshot img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .headshot-body{flex:1;}
-.headshot-body p{font-size:.95rem;line-height:1.85;color:rgba(232,228,223,.75);margin-bottom:1.1rem;max-width:640px;}
-.about-rest p{font-size:.95rem;line-height:1.85;color:rgba(232,228,223,.75);margin-bottom:1.1rem;max-width:640px;}
+.headshot-body p{font-size:.95rem;line-height:1.85;color:rgba(var(--text-rgb),.75);margin-bottom:1.1rem;max-width:640px;}
+.about-rest p{font-size:.95rem;line-height:1.85;color:rgba(var(--text-rgb),.75);margin-bottom:1.1rem;max-width:640px;}
 .about-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem;}
-.tag{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid rgba(255,255,255,.08);border-radius:100px;color:var(--muted);transition:all .3s;}
+.tag{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;padding:.4rem .9rem;border:1px solid var(--border-faint);border-radius:100px;color:var(--muted);transition:all .3s;}
 .tag:hover{border-color:var(--red);color:var(--red);}
 .edu-track{position:relative;padding-left:2.8rem;display:flex;flex-direction:column;gap:0;}
 .edu-track::before{content:'';position:absolute;left:.65rem;top:.7rem;bottom:.7rem;width:1px;background:linear-gradient(to bottom,var(--red),var(--purple),var(--blue));}
@@ -69,25 +91,25 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .edu-dot.past{border-color:var(--blue);}
 .edu-year{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:.35rem;}
 .edu-school{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--text);margin-bottom:.2rem;}
-.edu-degree{font-size:.92rem;color:rgba(232,228,223,.88);line-height:1.55;}
+.edu-degree{font-size:.92rem;color:rgba(var(--text-rgb),.88);line-height:1.55;}
 .edu-badge{display:inline-block;margin-top:.5rem;font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .65rem;border-radius:2px;background:linear-gradient(90deg,rgba(232,39,75,.1),rgba(26,63,191,.1));border:1px solid rgba(232,39,75,.2);color:var(--red);}
 .research-focus{margin-bottom:2.4rem;padding:2.2rem 2.5rem;border:1px solid rgba(232,39,75,.18);background:linear-gradient(135deg,rgba(232,39,75,.05),rgba(124,45,142,.04),rgba(26,63,191,.05));border-radius:2px;position:relative;overflow:hidden;}
 .research-focus::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));}
 .research-focus-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;opacity:.85;}
 .research-focus p{font-family:var(--serif);font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:300;line-height:1.55;color:var(--text);max-width:820px;}
 .research-focus p em{font-style:italic;background:linear-gradient(90deg,var(--red),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);}
+.research-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--border-softer);border:1px solid var(--border-softer);}
 .research-card{background:var(--bg);padding:2.5rem;transition:background .3s;position:relative;overflow:hidden;cursor:default;}
 .research-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .4s ease;}
-.research-card:hover::before{transform:scaleX(1);}.research-card:hover{background:rgba(255,255,255,.02);}
+.research-card:hover::before{transform:scaleX(1);}.research-card:hover{background:var(--card-hover-bg);}
 .card-number{font-family:var(--mono);font-size:.6rem;letter-spacing:.25em;color:var(--red);margin-bottom:1.2rem;opacity:.7;}
 .card-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;line-height:1.25;margin-bottom:.8rem;}
 .card-body{font-size:.85rem;line-height:1.8;color:var(--muted);}
-.card-advisor{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:rgba(232,228,223,.38);margin-top:.9rem;text-transform:uppercase;}
-.card-advisor span{color:rgba(232,228,223,.62);}
+.card-advisor{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:rgba(var(--text-rgb),.38);margin-top:.9rem;text-transform:uppercase;}
+.card-advisor span{color:rgba(var(--text-rgb),.62);}
 .card-tag{display:inline-block;margin-top:1rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:.3rem .8rem;background:linear-gradient(90deg,rgba(232,39,75,.1),rgba(26,63,191,.1));border:1px solid rgba(232,39,75,.2);color:var(--red);border-radius:2px;}
 .pub-list{display:flex;flex-direction:column;gap:0;}
-.pub-item{padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;}
+.pub-item{padding:1.5rem 0;border-bottom:1px solid var(--border-soft);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;}
 .pub-item:last-child{border-bottom:none;}
 .pub-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;line-height:1.4;margin-bottom:.4rem;}
 .pub-title a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(232,39,75,.2);transition:border-color .3s;}
@@ -101,24 +123,24 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .pub-section-head{font-family:var(--mono);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;margin:2.4rem 0 1rem;display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .pub-section-head::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(124,45,142,.3),transparent);}
 .pub-section-head.first{margin-top:0;}
-.pub-item.in-prep .pub-title{color:rgba(232,228,223,.88);}
-.pub-item.in-prep .pub-title-plain{font-family:var(--serif);font-size:1.05rem;font-weight:400;line-height:1.4;margin-bottom:.4rem;color:rgba(232,228,223,.88);}
+.pub-item.in-prep .pub-title{color:rgba(var(--text-rgb),.88);}
+.pub-item.in-prep .pub-title-plain{font-family:var(--serif);font-size:1.05rem;font-weight:400;line-height:1.4;margin-bottom:.4rem;color:rgba(var(--text-rgb),.88);}
 .talks-section-head{font-family:var(--mono);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;margin:2.4rem 0 1rem;display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .talks-section-head::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(124,45,142,.3),transparent);}
 .talks-section-head.first{margin-top:0;}
 .talk-list{display:flex;flex-direction:column;gap:1.2rem;}
-.talk-item{padding:1.4rem 1.6rem;border:1px solid rgba(255,255,255,.05);border-left:2px solid;border-radius:2px;transition:background .3s;}
-.talk-item:hover{background:rgba(255,255,255,.02);}
+.talk-item{padding:1.4rem 1.6rem;border:1px solid var(--border-soft);border-left:2px solid;border-radius:2px;transition:background .3s;}
+.talk-item:hover{background:var(--card-hover-bg);}
 .talk-item.invited{border-left-color:var(--red);}
 .talk-item.symposium{border-left-color:var(--purple);}
 .talk-item.poster{border-left-color:var(--blue);}
 .talk-type{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
 .talk-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;line-height:1.35;margin-bottom:.3rem;}
-.talk-venue{font-size:.82rem;color:rgba(232,228,223,.55);}
-.awards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);}
+.talk-venue{font-size:.82rem;color:rgba(var(--text-rgb),.55);}
+.awards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5px;background:var(--border-softer);border:1px solid var(--border-softer);}
 .award-card{background:var(--bg);padding:2rem 1.8rem;position:relative;overflow:hidden;transition:background .3s;}
 .award-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.award-card:hover::before{transform:scaleX(1);}.award-card:hover{background:rgba(255,255,255,.02);}
+.award-card:hover::before{transform:scaleX(1);}.award-card:hover{background:var(--card-hover-bg);}
 .award-year{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--red);opacity:.7;margin-bottom:.6rem;text-transform:uppercase;}
 .award-title{font-family:var(--serif);font-size:1.1rem;font-weight:400;line-height:1.3;margin-bottom:.5rem;}
 .award-body{font-size:.8rem;line-height:1.75;color:var(--muted);}
@@ -126,7 +148,7 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .mentorship-cta{padding:2.2rem;border:1px solid rgba(232,39,75,.15);background:linear-gradient(135deg,rgba(232,39,75,.04),rgba(26,63,191,.04));border-radius:2px;}
 .mentorship-cta h3{font-family:var(--serif);font-size:1.6rem;font-weight:300;margin-bottom:1.1rem;color:var(--text);}
 .mentorship-cta h3 em{font-style:italic;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.mentorship-cta p{font-size:.88rem;line-height:1.85;color:rgba(232,228,223,.7);margin-bottom:1.1rem;}
+.mentorship-cta p{font-size:.88rem;line-height:1.85;color:rgba(var(--text-rgb),.7);margin-bottom:1.1rem;}
 .mentorship-cta .cta-link{font-family:var(--mono);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid rgba(232,39,75,.3);padding-bottom:2px;transition:all .3s;display:inline-block;margin-top:.4rem;}
 .mentorship-cta .cta-link:hover{border-color:var(--red);}
 #contact{text-align:center;padding:8rem 3rem;}
@@ -134,7 +156,7 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 #contact h2 em{font-style:italic;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 #contact p{font-size:.95rem;color:var(--muted);max-width:420px;margin:0 auto 3rem;line-height:1.8;}
 .contact-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;}
-footer{border-top:1px solid rgba(255,255,255,.04);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
+footer{border-top:1px solid var(--border-softer);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;}
 footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
 .fg{background:linear-gradient(90deg,var(--red),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
@@ -165,6 +187,10 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
     <li><a href="#mentorship">Mentorship</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="mode-toggle" id="mode-toggle" aria-label="Toggle day/night mode" title="Toggle day/night mode">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
 </nav>
 
 <section id="hero">
@@ -204,6 +230,7 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
   </div>
   <div class="about-rest reveal">
     <p>I've served as a Neuroscience Policy Ambassador to the U.S. Congress, and conducted research across labs at Oxford, Harvard, MGH, and abroad. I advocate for pathways into neuroscience through the Dana Foundation for Neuroscience &amp; Society, and have presented first-authored research at 17 academic conferences across the US, UK, Italy, Canada, and Germany. Outside of all-things-neuroscience, I really love 80's music, Beach House, running, rowing, and exploring every coffee shop in a city!</p>
+    <p>This website has also been a fun (and evolving) coding project of mine. If you ever find any bugs, please let me know!</p>
     <div class="about-tags">
       <span class="tag">Neuropsychiatric Disorders</span><span class="tag">Precision Psychiatry</span><span class="tag">Neuroimaging</span>
       <span class="tag">Brain Stimulation</span><span class="tag">Law</span><span class="tag">Ethics</span><span class="tag">Jurisprudence</span>
@@ -220,28 +247,28 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
       <div class="edu-dot incoming"></div>
       <div class="edu-year">Incoming</div>
       <div class="edu-school">Stanford University</div>
-      <div class="edu-degree"><span style="color:rgba(232,228,223,.78);font-size:.82rem;color:rgba(232,228,223,.55);">PhD, Neuroscience</span><br><span style="color:rgba(232,228,223,.42);font-size:.8rem;">Knight-Hennessy Scholar</span></div>
+      <div class="edu-degree"><span style="color:rgba(var(--text-rgb),.78);font-size:.82rem;color:rgba(var(--text-rgb),.55);">PhD, Neuroscience</span><br><span style="color:rgba(var(--text-rgb),.42);font-size:.8rem;">Knight-Hennessy Scholar</span></div>
       <span class="edu-badge">Incoming</span>
     </div>
     <div class="edu-node">
       <div class="edu-dot incoming"></div>
       <div class="edu-year">Incoming</div>
       <div class="edu-school">Stanford Law School</div>
-      <div class="edu-degree"><span style="color:rgba(232,228,223,.78);font-size:.82rem;color:rgba(232,228,223,.55);">JD</span><br><span style="color:rgba(232,228,223,.42);font-size:.8rem;">Knight-Hennessy Scholar</span></div>
+      <div class="edu-degree"><span style="color:rgba(var(--text-rgb),.78);font-size:.82rem;color:rgba(var(--text-rgb),.55);">JD</span><br><span style="color:rgba(var(--text-rgb),.42);font-size:.8rem;">Knight-Hennessy Scholar</span></div>
       <span class="edu-badge">Incoming</span>
     </div>
     <div class="edu-node">
       <div class="edu-dot current"></div>
       <div class="edu-year">2025 &mdash; 2026</div>
       <div class="edu-school">University of Oxford</div>
-      <div class="edu-degree"><span style="color:rgba(232,228,223,.78);font-size:.82rem;color:rgba(232,228,223,.55);">MSc, Neuroscience</span><br><span style="color:rgba(232,228,223,.42);font-size:.8rem;">Clarendon Scholar<br>Harvard&ndash;UK Fellow</span></div>
+      <div class="edu-degree"><span style="color:rgba(var(--text-rgb),.78);font-size:.82rem;color:rgba(var(--text-rgb),.55);">MSc, Neuroscience</span><br><span style="color:rgba(var(--text-rgb),.42);font-size:.8rem;">Clarendon Scholar<br>Harvard&ndash;UK Fellow</span></div>
       <span class="edu-badge" style="border-color:rgba(124,45,142,.3);color:var(--purple);">Current</span>
     </div>
     <div class="edu-node">
       <div class="edu-dot past"></div>
       <div class="edu-year">2020 &mdash; 2025</div>
       <div class="edu-school">Harvard College</div>
-      <div class="edu-degree"><span style="color:rgba(232,228,223,.78);font-size:.82rem;color:rgba(232,228,223,.55);">AB, Neuroscience</span><br><span style="color:rgba(232,228,223,.42);font-size:.8rem;">Highest Honors<br>Certificate in Mind, Brain, and Behavior Studies</span></div>
+      <div class="edu-degree"><span style="color:rgba(var(--text-rgb),.78);font-size:.82rem;color:rgba(var(--text-rgb),.55);">AB, Neuroscience</span><br><span style="color:rgba(var(--text-rgb),.42);font-size:.8rem;">Highest Honors<br>Certificate in Mind, Brain, and Behavior Studies</span></div>
     </div>
   </div>
 </section>
@@ -720,9 +747,9 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
   <div class="mentorship-wrap">
     <div class="reveal">
       <h2 class="about-headline" style="font-size:clamp(1.6rem,2.6vw,2.3rem);margin-bottom:1.4rem;">Grateful for <em>incredible mentors</em> &mdash; and happy to pay it forward!</h2>
-      <p style="font-size:.92rem;line-height:1.88;color:rgba(232,228,223,.72);margin-bottom:1.2rem;">I've been far too lucky with the people I've gotten to learn from. Francis Shen, Christy Denckla, Caroline Montojo, Gabriel L&aacute;zaro-Mu&ntilde;oz, Josh Greene, Steve Hyman (and many others) have been far kinder and more generous with their time than I deserved. Their mentorship has shaped everything about how I think and work.</p>
-      <p style="font-size:.92rem;line-height:1.88;color:rgba(232,228,223,.72);margin-bottom:1.2rem;">I led a <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Vb9l9tcAAAAJ&citation_for_view=Vb9l9tcAAAAJ:zYLM7Y9cAGgC" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(232,39,75,.3);">publication on mentoring in neuroscience and society careers</a>, drawing on lessons from the Dana Foundation Career Network &mdash; because I think pathways into this field should be clearer and more equitable for everyone.</p>
-      <p style="font-size:.92rem;line-height:1.88;color:rgba(232,228,223,.72);">Supported by the Dana Foundation (who inspired this site's colors!), I also helped to build <a href="https://neuroxcareers.org" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(232,39,75,.3);">neuroXcareers</a>, a free platform connecting students and early-career researchers with mentors, resources, and opportunities across neuroscience and neurolaw. It grew to reach over 15,000 people across 29 countries and 306 institutions &mdash; stop by!</p>
+      <p style="font-size:.92rem;line-height:1.88;color:rgba(var(--text-rgb),.72);margin-bottom:1.2rem;">I've been far too lucky with the people I've gotten to learn from. Francis Shen, Christy Denckla, Caroline Montojo, Gabriel L&aacute;zaro-Mu&ntilde;oz, Josh Greene, Steve Hyman (and many others) have been far kinder and more generous with their time than I deserved. Their mentorship has shaped everything about how I think and work.</p>
+      <p style="font-size:.92rem;line-height:1.88;color:rgba(var(--text-rgb),.72);margin-bottom:1.2rem;">I led a <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Vb9l9tcAAAAJ&citation_for_view=Vb9l9tcAAAAJ:zYLM7Y9cAGgC" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(232,39,75,.3);">publication on mentoring in neuroscience and society careers</a>, drawing on lessons from the Dana Foundation Career Network &mdash; because I think pathways into this field should be clearer and more equitable for everyone.</p>
+      <p style="font-size:.92rem;line-height:1.88;color:rgba(var(--text-rgb),.72);">Supported by the Dana Foundation (who inspired this site's colors!), I also helped to build <a href="https://neuroxcareers.org" target="_blank" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(232,39,75,.3);">neuroXcareers</a>, a free platform connecting students and early-career researchers with mentors, resources, and opportunities across neuroscience and neurolaw. It grew to reach over 15,000 people across 29 countries and 306 institutions &mdash; stop by!</p>
     </div>
     <div class="reveal">
       <div class="mentorship-cta">
@@ -789,7 +816,8 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
   var ePA=new THREE.BufferAttribute(ep,3),eCA=new THREE.BufferAttribute(ec,3);
   eCA.setUsage(THREE.DynamicDrawUsage);
   eGeo.setAttribute('position',ePA);eGeo.setAttribute('color',eCA);
-  g.add(new THREE.LineSegments(eGeo,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:1.0,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false})));
+  var edgeMat=new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:1.0,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false});
+  g.add(new THREE.LineSegments(eGeo,edgeMat));
   var NV=[];
   for(var i=0;i<V.length;i+=6){var vv=V[i],d2=vv[0]*vv[0]+vv[1]*vv[1]+vv[2]*vv[2];if(d2>0.20)NV.push(vv);}
   var NC=NV.length;
@@ -803,7 +831,8 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
   var nPA=new THREE.BufferAttribute(np,3),nCA=new THREE.BufferAttribute(nc,3);
   nCA.setUsage(THREE.DynamicDrawUsage);
   nGeo.setAttribute('position',nPA);nGeo.setAttribute('color',nCA);
-  g.add(new THREE.Points(nGeo,new THREE.PointsMaterial({size:0.012,vertexColors:true,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true})));
+  var nodeMat=new THREE.PointsMaterial({size:0.012,vertexColors:true,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true});
+  g.add(new THREE.Points(nGeo,nodeMat));
   var PAIRS=[],TH=0.26;
   for(var i=0;i<NC;i++){for(var j=i+1;j<NC;j++){var dx=NV[i][0]-NV[j][0],dy=NV[i][1]-NV[j][1],dz=NV[i][2]-NV[j][2],d=Math.sqrt(dx*dx+dy*dy+dz*dz);if(d<TH&&d>0.06)PAIRS.push([i,j]);}}
   var PLC=PAIRS.length;
@@ -817,13 +846,27 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
   var plPA=new THREE.BufferAttribute(plp,3),plCA=new THREE.BufferAttribute(plc,3);
   plCA.setUsage(THREE.DynamicDrawUsage);
   plGeo.setAttribute('position',plPA);plGeo.setAttribute('color',plCA);
-  g.add(new THREE.LineSegments(plGeo,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:1.0,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false})));
+  var pulseLineMat=new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:1.0,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false});
+  g.add(new THREE.LineSegments(plGeo,pulseLineMat));
   var MP=55,pulses=[],dp=new Float32Array(MP*3),dc=new Float32Array(MP*3);
   var dGeo=new THREE.BufferGeometry();
   var dPA2=new THREE.BufferAttribute(dp,3),dCA2=new THREE.BufferAttribute(dc,3);
   dPA2.setUsage(THREE.DynamicDrawUsage);dCA2.setUsage(THREE.DynamicDrawUsage);
   dGeo.setAttribute('position',dPA2);dGeo.setAttribute('color',dCA2);dGeo.setDrawRange(0,0);
-  g.add(new THREE.Points(dGeo,new THREE.PointsMaterial({size:0.025,vertexColors:true,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true})));
+  var pulseDotMat=new THREE.PointsMaterial({size:0.025,vertexColors:true,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true});
+  g.add(new THREE.Points(dGeo,pulseDotMat));
+  var dayMode=false;
+  window.__setBrainMode=function(mode){
+    dayMode=(mode==='day');
+    var mats=[edgeMat,nodeMat,pulseLineMat,pulseDotMat];
+    var blend=dayMode?THREE.NormalBlending:THREE.AdditiveBlending;
+    mats.forEach(function(m){m.blending=blend;m.needsUpdate=true;});
+    edgeMat.opacity=dayMode?0.75:1.0;
+    pulseLineMat.opacity=dayMode?0.85:1.0;
+    nodeMat.opacity=dayMode?1.0:0.8;
+    pulseDotMat.opacity=dayMode?1.0:0.9;
+  };
+  if(document.body.classList.contains('day-mode'))window.__setBrainMode('day');
   function spawn(){if(pulses.length>=MP||PLC===0)return;var pi=Math.floor(Math.random()*PLC),pr=PAIRS[pi];var vc=hc((NV[pr[0]][1]+NV[pr[1]][1])*.5);pulses.push({pi:pi,t:0,sp:.25+Math.random()*.5,ni:pr[0],nj:pr[1],col:vc});}
   for(var i=0;i<55;i++)spawn();
   window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
@@ -844,21 +887,51 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
       wx/=wl;wy/=wl;wz/=wl;
       var dot=wx*camDir.x+wy*camDir.y+wz*camDir.z;
       var fade=dot>0?(0.78+dot*0.22):(0.12+Math.max(0,dot+1)*0.16);
-      ec[k*6]=edgeBaseR[k]*fade;ec[k*6+1]=edgeBaseG[k]*fade;ec[k*6+2]=edgeBaseB[k]*fade;
-      ec[k*6+3]=edgeBaseR[k]*fade;ec[k*6+4]=edgeBaseG[k]*fade;ec[k*6+5]=edgeBaseB[k]*fade;
+      if(dayMode){
+        // In day mode: use fade directly as bg-blend amount. Low fade = blend heavily toward bg (prevents dark lines).
+        // Boost colors to be more fluorescent before blending.
+        var br=0.97,bg2=0.96,bb=0.945;
+        // Blend amt: when fade is low (back/silhouette), blend near-fully to bg. When fade high, keep vivid color.
+        var bgMix=1-Math.pow(fade,0.6);  // fade=1 -> 0 bgMix, fade=0.12 -> ~0.73 bgMix
+        // Fluorescent boost: push colors toward saturation
+        var boost=1.25;
+        var r=Math.min(1,edgeBaseR[k]*boost),gv=Math.min(1,edgeBaseG[k]*boost),bv=Math.min(1,edgeBaseB[k]*boost);
+        r=r*(1-bgMix)+br*bgMix;gv=gv*(1-bgMix)+bg2*bgMix;bv=bv*(1-bgMix)+bb*bgMix;
+        ec[k*6]=r;ec[k*6+1]=gv;ec[k*6+2]=bv;
+        ec[k*6+3]=r;ec[k*6+4]=gv;ec[k*6+5]=bv;
+      }else{
+        ec[k*6]=edgeBaseR[k]*fade;ec[k*6+1]=edgeBaseG[k]*fade;ec[k*6+2]=edgeBaseB[k]*fade;
+        ec[k*6+3]=edgeBaseR[k]*fade;ec[k*6+4]=edgeBaseG[k]*fade;ec[k*6+5]=edgeBaseB[k]*fade;
+      }
     }
     eCA.needsUpdate=true;
-    for(var i=0;i<NC;i++){var gg=.28+.16*Math.sin(t*nsp[i]+nph[i]);var c=hc(NV[i][1]);nc[i*3]=c.r*gg;nc[i*3+1]=c.g*gg;nc[i*3+2]=c.b*gg;}
+    if(dayMode){
+      for(var i=0;i<NC;i++){var gg=.85+.15*Math.sin(t*nsp[i]+nph[i]);var c=hc(NV[i][1]);nc[i*3]=Math.min(1,c.r*gg*1.25);nc[i*3+1]=Math.min(1,c.g*gg*1.25);nc[i*3+2]=Math.min(1,c.b*gg*1.25);}
+    }else{
+      for(var i=0;i<NC;i++){var gg=.28+.16*Math.sin(t*nsp[i]+nph[i]);var c=hc(NV[i][1]);nc[i*3]=c.r*gg;nc[i*3+1]=c.g*gg;nc[i*3+2]=c.b*gg;}
+    }
     nCA.needsUpdate=true;
-    for(var i=0;i<plc.length;i++)plc[i]=0;
+    if(dayMode){for(var i=0;i<plc.length;i+=3){plc[i]=0.97;plc[i+1]=0.96;plc[i+2]=0.945;}}
+    else{for(var i=0;i<plc.length;i++)plc[i]=0;}
     st+=0.016;if(st>0.08){st=0;spawn();}
     var di=0;
     for(var p=pulses.length-1;p>=0;p--){
       var pu=pulses[p];pu.t+=0.016*pu.sp;
       if(pu.t>=1){pulses.splice(p,1);spawn();continue;}
-      var br=Math.sin(pu.t*Math.PI),pi2=pu.pi,bo=br*0.85;
-      plc[pi2*6]=plb[pi2*6]*bo;plc[pi2*6+1]=plb[pi2*6+1]*bo;plc[pi2*6+2]=plb[pi2*6+2]*bo;
-      plc[pi2*6+3]=plb[pi2*6+3]*bo;plc[pi2*6+4]=plb[pi2*6+4]*bo;plc[pi2*6+5]=plb[pi2*6+5]*bo;
+      var br=Math.sin(pu.t*Math.PI),pi2=pu.pi,bo=br*(dayMode?1.4:0.85);
+      if(dayMode){
+        // Blend from bg color up to vivid pulse color based on brightness (avoids black at pulse start/end)
+        var bgR=0.97,bgG=0.96,bgB=0.945;
+        plc[pi2*6]=bgR+(Math.min(1,plb[pi2*6]*1.5)-bgR)*br;
+        plc[pi2*6+1]=bgG+(Math.min(1,plb[pi2*6+1]*1.5)-bgG)*br;
+        plc[pi2*6+2]=bgB+(Math.min(1,plb[pi2*6+2]*1.5)-bgB)*br;
+        plc[pi2*6+3]=bgR+(Math.min(1,plb[pi2*6+3]*1.5)-bgR)*br;
+        plc[pi2*6+4]=bgG+(Math.min(1,plb[pi2*6+4]*1.5)-bgG)*br;
+        plc[pi2*6+5]=bgB+(Math.min(1,plb[pi2*6+5]*1.5)-bgB)*br;
+      }else{
+        plc[pi2*6]=Math.min(1,plb[pi2*6]*bo);plc[pi2*6+1]=Math.min(1,plb[pi2*6+1]*bo);plc[pi2*6+2]=Math.min(1,plb[pi2*6+2]*bo);
+        plc[pi2*6+3]=Math.min(1,plb[pi2*6+3]*bo);plc[pi2*6+4]=Math.min(1,plb[pi2*6+4]*bo);plc[pi2*6+5]=Math.min(1,plb[pi2*6+5]*bo);
+      }
       if(di<MP){var va2=NV[pu.ni],vb2=NV[pu.nj];dp[di*3]=va2[0]+(vb2[0]-va2[0])*pu.t;dp[di*3+1]=va2[1]+(vb2[1]-va2[1])*pu.t;dp[di*3+2]=va2[2]+(vb2[2]-va2[2])*pu.t;dc[di*3]=Math.min(1,pu.col.r*br*2.4);dc[di*3+1]=Math.min(1,pu.col.g*br*2.4);dc[di*3+2]=Math.min(1,pu.col.b*br*2.4);di++;}
     }
     plCA.needsUpdate=true;dPA2.needsUpdate=true;dCA2.needsUpdate=true;dGeo.setDrawRange(0,di);
@@ -881,6 +954,17 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
   window.addEventListener('scroll',function(){
     btn.style.opacity=window.scrollY>400?'1':'0';
     btn.style.transform=window.scrollY>400?'translateY(0)':'translateY(8px)';
+  });
+})();
+</script>
+<script>
+(function(){
+  var t=document.getElementById('mode-toggle');
+  if(!t)return;
+  t.addEventListener('click',function(){
+    document.body.classList.toggle('day-mode');
+    var isDay=document.body.classList.contains('day-mode');
+    if(window.__setBrainMode)window.__setBrainMode(isDay?'day':'night');
   });
 })();
 </script>
