@@ -42,8 +42,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .mode-toggle .sun{display:none;}
 body.day-mode .mode-toggle .sun{display:block;}
 body.day-mode .mode-toggle .moon{display:none;}
-.toggle-hint{position:absolute;top:calc(100% + .3rem);right:0;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none;opacity:0;animation:hintFadeIn 1.2s 2.4s forwards;}
-.toggle-hint.dismissed{animation:hintFadeOut .4s forwards;}
+.toggle-hint{position:absolute;top:calc(100% + .3rem);right:0;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none;opacity:0;animation:hintFadeIn .6s .8s forwards;transition:opacity .3s ease,transform .3s ease;}
+.toggle-hint.dismissed{opacity:0!important;transform:translateY(-4px);animation:none;}
 .toggle-hint-arrow{width:42px;height:34px;margin-right:.6rem;color:#fff;}
 .toggle-hint-text{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:500;color:#fff;white-space:nowrap;line-height:1;margin-top:.1rem;text-shadow:0 1px 3px rgba(0,0,0,.4);}
 body.day-mode .toggle-hint-arrow{color:var(--text);}
@@ -980,21 +980,26 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
   var t=document.getElementById('mode-toggle');
   var hint=document.getElementById('toggle-hint');
   if(!t)return;
-  var dismissed=false;
-  function dismissHint(){
-    if(!hint||dismissed)return;
-    dismissed=true;
+  var clickedAway=false;
+  function setHidden(hidden){
+    if(!hint||clickedAway)return;
+    if(hidden){hint.classList.add('dismissed');}
+    else{hint.classList.remove('dismissed');}
+  }
+  function permanentDismiss(){
+    if(!hint||clickedAway)return;
+    clickedAway=true;
     hint.classList.add('dismissed');
-    setTimeout(function(){if(hint)hint.style.display='none';},450);
+    setTimeout(function(){if(hint)hint.style.display='none';},350);
   }
   t.addEventListener('click',function(){
     document.body.classList.toggle('day-mode');
     var isDay=document.body.classList.contains('day-mode');
     if(window.__setBrainMode)window.__setBrainMode(isDay?'day':'night');
-    dismissHint();
+    permanentDismiss();
   });
   window.addEventListener('scroll',function(){
-    if(window.scrollY>40)dismissHint();
+    setHidden(window.scrollY>700);
   },{passive:true});
 })();
 </script>
