@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Craig W. McFarland</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--red:#E8274B;--blue:#1A3FBF;--purple:#7C2D8E;--bg:#060608;--text:#e8e4df;--muted:#7a7570;
@@ -35,12 +35,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links{display:flex;gap:2rem;list-style:none;}
 .nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .3s;}
 .nav-links a:hover{color:var(--text);}
+.toggle-wrap{position:relative;display:flex;align-items:center;flex-shrink:0;}
 .mode-toggle{background:none;border:1px solid var(--border-faint);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;padding:0;flex-shrink:0;}
 .mode-toggle:hover{border-color:var(--border-hover);color:var(--text);}
-.mode-toggle svg{width:14px;height:14px;}
+.mode-toggle svg.moon,.mode-toggle svg.sun{width:14px;height:14px;}
 .mode-toggle .sun{display:none;}
 body.day-mode .mode-toggle .sun{display:block;}
 body.day-mode .mode-toggle .moon{display:none;}
+.toggle-hint{position:absolute;top:calc(100% + .3rem);right:0;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none;opacity:0;animation:hintFadeIn 1.2s 2.4s forwards;}
+.toggle-hint.dismissed{animation:hintFadeOut .4s forwards;}
+.toggle-hint-arrow{width:42px;height:34px;margin-right:.6rem;color:#fff;}
+.toggle-hint-text{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:500;color:#fff;white-space:nowrap;line-height:1;margin-top:.1rem;text-shadow:0 1px 3px rgba(0,0,0,.4);}
+body.day-mode .toggle-hint-arrow{color:var(--text);}
+body.day-mode .toggle-hint-text{color:var(--text);text-shadow:none;}
+@keyframes hintFadeIn{0%{opacity:0;transform:translateY(-6px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes hintFadeOut{to{opacity:0;transform:translateY(-4px);}}
 #hero{position:relative;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:var(--bg);transition:background .4s ease;}
 #brain-canvas{position:absolute;inset:0;width:100%;height:100%;background:var(--bg);transition:background .4s ease;}
 .hero-brain-space{flex:1;}
@@ -187,10 +196,19 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
     <li><a href="#mentorship">Mentorship</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="mode-toggle" id="mode-toggle" aria-label="Toggle day/night mode" title="Toggle day/night mode">
-    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-  </button>
+  <div class="toggle-wrap">
+    <button class="mode-toggle" id="mode-toggle" aria-label="Toggle day/night mode" title="Toggle day/night mode">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+    <div class="toggle-hint" id="toggle-hint">
+      <svg class="toggle-hint-arrow" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 30 C 10 20, 18 10, 34 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <path d="M34 6 L 28 8 M 34 6 L 32 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="toggle-hint-text">Activate your visual cortex!</span>
+    </div>
+  </div>
 </nav>
 
 <section id="hero">
@@ -960,12 +978,24 @@ var BD = {"v":[[0.157,-0.369,0.0445],[0.1751,-0.3648,0.077],[0.212,-0.3847,0.064
 <script>
 (function(){
   var t=document.getElementById('mode-toggle');
+  var hint=document.getElementById('toggle-hint');
   if(!t)return;
+  var dismissed=false;
+  function dismissHint(){
+    if(!hint||dismissed)return;
+    dismissed=true;
+    hint.classList.add('dismissed');
+    setTimeout(function(){if(hint)hint.style.display='none';},450);
+  }
   t.addEventListener('click',function(){
     document.body.classList.toggle('day-mode');
     var isDay=document.body.classList.contains('day-mode');
     if(window.__setBrainMode)window.__setBrainMode(isDay?'day':'night');
+    dismissHint();
   });
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>40)dismissHint();
+  },{passive:true});
 })();
 </script>
 </body>
