@@ -114,8 +114,8 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .card-number{font-family:var(--mono);font-size:.6rem;letter-spacing:.25em;color:var(--red);margin-bottom:1.2rem;opacity:.7;}
 .card-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;line-height:1.25;margin-bottom:.8rem;}
 .card-body{font-size:.85rem;line-height:1.8;color:var(--muted);}
-.card-advisor{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:rgba(var(--text-rgb),.38);margin-top:.9rem;text-transform:uppercase;}
-.card-advisor span{color:rgba(var(--text-rgb),.62);}
+.card-advisor{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:rgba(var(--text-rgb),.45);margin-top:1.6rem;text-transform:uppercase;padding:.4rem .85rem;background:linear-gradient(90deg,rgba(232,39,75,.1),rgba(26,63,191,.1));border:1px solid rgba(232,39,75,.28);border-radius:2px;line-height:1.55;}
+.card-advisor span{color:rgba(var(--text-rgb),.72);}
 .card-tag{display:inline-block;margin-top:1rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:.3rem .8rem;background:linear-gradient(90deg,rgba(232,39,75,.1),rgba(26,63,191,.1));border:1px solid rgba(232,39,75,.2);color:var(--red);border-radius:2px;}
 .pub-list{display:flex;flex-direction:column;gap:0;}
 .pub-item{padding:1.5rem 0;border-bottom:1px solid var(--border-soft);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;}
@@ -127,8 +127,8 @@ section{max-width:1100px;margin:0 auto;padding:6rem 3rem;}
 .pub-me{font-weight:400;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline;}
 .pub-journal{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);white-space:nowrap;margin-top:.2rem;text-align:right;}
 .pub-year{font-family:var(--mono);font-size:.58rem;color:var(--muted);text-align:right;}
-.pub-status{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;margin-top:.2rem;text-align:right;padding:.25rem .65rem;border-radius:2px;background:linear-gradient(90deg,rgba(232,39,75,.1),rgba(124,45,142,.1),rgba(26,63,191,.1));border:1px solid rgba(124,45,142,.25);background-clip:padding-box;display:inline-block;}
-.pub-status span{background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.pub-status{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;margin-top:.2rem;text-align:right;padding:.25rem .65rem;border-radius:2px;background:linear-gradient(90deg,rgba(232,39,75,.16),rgba(124,45,142,.16),rgba(26,63,191,.16));border:1px solid rgba(232,39,75,.35);background-clip:padding-box;display:inline-block;}
+.pub-status span{background:linear-gradient(90deg,#FF5C7A,#C77BE8,#6B92FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:400;}
 .pub-section-head{font-family:var(--mono);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;margin:2.4rem 0 1rem;display:flex;align-items:center;gap:1rem;background:linear-gradient(90deg,var(--red),var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .pub-section-head::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(124,45,142,.3),transparent);}
 .pub-section-head.first{margin-top:0;}
@@ -247,12 +247,8 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
     </div>
   </div>
   <div class="about-rest reveal">
-    <p>I've served as a Neuroscience Policy Ambassador to the U.S. Congress, and conducted research across labs at Oxford, Harvard, MGH, and abroad. I advocate for pathways into neuroscience through the Dana Foundation for Neuroscience &amp; Society, and have presented first-authored research at 17 academic conferences across the US, UK, Italy, Canada, and Germany. Outside of all-things-neuroscience, I really love 80's music, Beach House, running, rowing, and exploring every coffee shop in a city!</p>
-    <p>This website has also been a fun (and evolving) coding project of mine. If you ever find any bugs, please let me know!</p>
-    <div class="about-tags">
-      <span class="tag">Neuropsychiatric Disorders</span><span class="tag">Precision Psychiatry</span><span class="tag">Neuroimaging</span>
-      <span class="tag">Brain Stimulation</span><span class="tag">Law</span><span class="tag">Ethics</span><span class="tag">Jurisprudence</span>
-    </div>
+    <p>I've served as a Neuroscience Policy Ambassador to the U.S. Congress, and conducted research across labs at Oxford, Harvard, MGH, and abroad. I advocate for pathways into neuroscience through the Dana Foundation for Neuroscience &amp; Society, and have presented first-authored research at 17 academic conferences across the US, UK, Italy, Canada, and Germany.</p>
+    <p>Outside of all-things-neuroscience, I really love 80's music, Beach House, rowing, exploring every coffee shop in a city, being a half-good baker, and being from Florida! This website has also been a fun (and evolving) coding project of mine. If you ever find any bugs, please let me know!</p>
   </div>
 </section>
 
@@ -305,56 +301,60 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
       <h3 class="card-title">Neuroanatomical Subtypes of Schizophrenia: Cross-Species Analysis</h3>
       <p class="card-body">Investigating subtypes using structural MRI and machine learning&ndash;derived canonical brain maps, linking human brain phenotypes to genetic mouse models through cross-species spatial analysis.</p>
       <div class="card-advisor">Advisors: <span>Rogier Mars &amp; Robert McCutcheon</span></div>
-      <span class="card-tag">ML &middot; Structural MRI &middot; Schizophrenia</span>
     </div>
     <div class="research-card reveal">
       <div class="card-number">02</div>
       <h3 class="card-title">Hippocampal&ndash;Midbrain Mechanisms of Psychosis: A 7T Neuroimaging Study</h3>
       <p class="card-body">Leading a project using multimodal 7T neuroimaging (fMRI, MRS, structural MRI) and psychometric measures in first-episode psychosis patients and controls.</p>
-      <div class="card-advisor">PI: <span>Helen Barron</span></div>
-      <span class="card-tag">7T fMRI &middot; Psychosis &middot; Circuits</span>
+      <div class="card-advisor">Advisor: <span>Helen Barron</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">03</div>
-      <h3 class="card-title">Emerging Neurotechnologies &amp; Youth Mental Health</h3>
-      <p class="card-body">Organized a multi-day research seminar at the Radcliffe Institute. First-authored a publication in NPP &mdash; Digital Psychiatry &amp; Neuroscience on leveraging neurotechnologies for equitable youth mental health impact.</p>
-      <div class="card-advisor">Advisors: <span>Francis X. Shen, Benjamin Silverman &amp; Donnella Comeau</span></div>
-      <span class="card-tag">Neurotechnology &middot; Ethics</span>
+      <h3 class="card-title">Neuroimaging of Domestic Violence Survivors</h3>
+      <p class="card-body">Leading different projects to understand the neurological and psychiatric sequelae of intimate partner violence, including how cumulative partner-inflicted brain injury shapes cognitive outcomes and how subcortical structure volumes relate to symptom presentation.</p>
+      <div class="card-advisor">Advisor: <span>Eve M. Valera</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">04</div>
-      <h3 class="card-title">Psychiatric Polygenic Risk Scores in Clinical Care</h3>
-      <p class="card-body">First-author manuscript on integrating psychiatric polygenic risk scores into clinical care, in collaboration with Harvard Medical School, Mass General Hospital, and Baylor College of Medicine.</p>
-      <div class="card-advisor">PIs: <span>Gabriel L&aacute;zaro-Mu&ntilde;oz &amp; Amanda Merner</span></div>
-      <span class="card-tag">Genetics &middot; Ethics</span>
+      <h3 class="card-title">Transcranial Ultrasound Stimulation for Precision Psychiatry &amp; Causal Interrogation</h3>
+      <p class="card-body">Developing image-guided focused ultrasound stimulation approaches for circuit-level precision psychiatry, and using transcranial ultrasound stimulation to causally modulate the human hippocampus &mdash; enabling direct interrogation of deep memory circuits previously inaccessible to non-invasive stimulation.</p>
+      <div class="card-advisor">Advisors: <span>David A. Silbersweig, Helen Barron &amp; Valentina Mancini</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">05</div>
-      <h3 class="card-title">Brain Structure Morphology of Post-Traumatic Stress Disorder</h3>
-      <p class="card-body">First-author manuscript in preparation. 120-page honors thesis investigating how brain structure predicts PTSD symptomatology, and how neuroanatomy&ndash;PTSD relationships differ across sex, SES, and race in the AURORA cohort. Received 11 research awards.</p>
-      <div class="card-advisor">Advisor: <span>Christy Denckla</span></div>
-      <span class="card-tag">MRI &middot; PTSD &middot; Epidemiology</span>
+      <h3 class="card-title">Emerging Neurotechnologies &amp; Youth Mental Health</h3>
+      <p class="card-body">Organized a multi-day research seminar at the Radcliffe Institute. First-authored a publication in NPP &mdash; Digital Psychiatry &amp; Neuroscience on leveraging neurotechnologies for equitable youth mental health impact.</p>
+      <div class="card-advisor">Advisors: <span>Francis X. Shen, Benjamin Silverman &amp; Donnella Comeau</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">06</div>
-      <h3 class="card-title">Generalizability in Human Neuroimaging Studies</h3>
-      <p class="card-body">Worked with REACH for BRAIN to examine issues of diversity and barriers to generalizability in human neuroimaging research.</p>
-      <div class="card-advisor">PI: <span>Francis X. Shen</span></div>
-      <span class="card-tag">Neuroimaging &middot; Diversity</span>
+      <h3 class="card-title">Psychiatric Polygenic Risk Scores in Clinical Care</h3>
+      <p class="card-body">First-author manuscript on integrating psychiatric polygenic risk scores into clinical care, in collaboration with Harvard Medical School, Mass General Hospital, and Baylor College of Medicine.</p>
+      <div class="card-advisor">Advisors: <span>Gabriel L&aacute;zaro-Mu&ntilde;oz &amp; Amanda Merner</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">07</div>
-      <h3 class="card-title">Neuroscience Evidence in the Courtroom</h3>
-      <p class="card-body">Assessed a pilot program educating 20 judges on neuroscience and its impact on judicial decision-making. In tandem, compared neuroscience evidence standards between the U.S., U.K., and Switzerland.</p>
-      <div class="card-advisor">PI: <span>Francis X. Shen</span></div>
-      <span class="card-tag">Neurolaw &middot; Policy</span>
+      <h3 class="card-title">Brain Structure Morphology of Post-Traumatic Stress Disorder</h3>
+      <p class="card-body">First-author manuscript in preparation. 120-page honors thesis investigating how brain structure predicts PTSD symptomatology, and how neuroanatomy&ndash;PTSD relationships differ across sex, SES, and race in the AURORA cohort. Received 11 research awards.</p>
+      <div class="card-advisor">Advisor: <span>Christy Denckla</span></div>
     </div>
     <div class="research-card reveal">
       <div class="card-number">08</div>
+      <h3 class="card-title">Generalizability in Human Neuroimaging Studies</h3>
+      <p class="card-body">Worked with REACH for BRAIN to examine issues of diversity and barriers to generalizability in human neuroimaging research.</p>
+      <div class="card-advisor">Advisor: <span>Francis X. Shen</span></div>
+    </div>
+    <div class="research-card reveal">
+      <div class="card-number">09</div>
+      <h3 class="card-title">Neuroscience Evidence in the Courtroom</h3>
+      <p class="card-body">Assessed a pilot program educating 20 judges on neuroscience and its impact on judicial decision-making. In tandem, compared neuroscience evidence standards between the U.S., U.K., and Switzerland.</p>
+      <div class="card-advisor">Advisor: <span>Francis X. Shen</span></div>
+    </div>
+    <div class="research-card reveal">
+      <div class="card-number">10</div>
       <h3 class="card-title">Psychopathologized Identities: A History of Neuroscience &amp; Law</h3>
       <p class="card-body">Radcliffe Institute-funded archival project tracing how neuroscience has been weaponized to pathologize marginalized identities across 18th&ndash;21st century law and medicine. Presented at the 25th Anniversary of the Radcliffe Institute.</p>
       <div class="card-advisor">Funding: <span>Carol K. Pforzheimer Fellowship, Radcliffe Institute</span></div>
-      <span class="card-tag">Neuroethics &middot; History of Science</span>
     </div>
   </div>
 </section>
@@ -446,69 +446,90 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
   <div class="pub-section-head reveal">In Preparation</div>
   <div class="pub-list reveal">
     <div class="pub-item in-prep">
-      <div>
-        <div class="pub-title-plain">Hippocampal Enlargement Predicts Memory-Related PTSD Symptoms</div>
-        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Garrison-Desany H, Denckla CA</div>
-      </div>
-      <div><div class="pub-status"><span>In Preparation</span></div></div>
-    </div>
+          <div>
+            <div class="pub-title-plain">Focused ultrasound as a causal tool and treatment for brain circuit-level precision psychiatry</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Silbersweig DA</div>
+          </div>
+          <div><div class="pub-status"><span>Under Review</span></div></div>
+        </div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Transcranial ultrasound stimulation as a tool to causally modulate the human hippocampus</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Klein-Fl&uuml;gge MK, Barron HC, Mancini V</div>
+          </div>
+          <div><div class="pub-status"><span>Under Review</span></div></div>
+        </div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Expanding Neuroscience and Society Engagement: A Pilot Survey of R1 Neuroscience Principal Investigators</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Person K, Kennedy Person, Tobel TW, Shen FX</div>
+          </div>
+          <div><div class="pub-status"><span>Under Review</span></div></div>
+        </div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Adult Patient Perspectives on Psychiatric Polygenic Risk Scores</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Merner AR, Trotter PM, Martinez AC, Soda T, Storch EA, Pereira S, L&aacute;zaro-Mu&ntilde;oz G</div>
+          </div>
+          <div><div class="pub-status"><span>Under Review</span></div></div>
+        </div>
     <div class="pub-item in-prep">
       <div>
-        <div class="pub-title-plain">Thalamic Volume Shortly After Trauma Predicts Future Intrusive Memories</div>
-        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Garrison-Desany H, Denckla CA</div>
+        <div class="pub-title-plain">Considering the Impacts of Psychiatric Medications on Identity in Mental Health</div>
+        <div class="pub-authors"><span class="pub-me">McFarland CW</span></div>
       </div>
-      <div><div class="pub-status"><span>In Preparation</span></div></div>
-    </div>
+      <div><div class="pub-status"><span>Under Review</span></div></div>
+</div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Partner-inflicted brain injury may cognitively age survivors by over a decade</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Valera EM</div>
+          </div>
+          <div><div class="pub-status"><span>In Preparation</span></div></div>
+        </div>
     <div class="pub-item in-prep">
       <div>
-        <div class="pub-title-plain">Transcranial Ultrasound Stimulation for Human Memory Research: Toward Causal Interrogation of Deep Memory Circuits</div>
-        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Barron HC, Mancini V</div>
+        <div class="pub-title-plain">Non-Invasive Neurotechnology and Digital Tools for Psychiatric Diagnosis: A Scoping Review of Ethical, Legal, and Societal Issues</div>
+        <div class="pub-authors">Law ME*, <span class="pub-me">McFarland CW*</span>, Ramirez IE, Stevens I, Lu N, Shen FX &middot; <em style="font-style:italic;opacity:.8;">*co-first authors</em></div>
       </div>
       <div><div class="pub-status"><span>In Preparation</span></div></div>
-    </div>
+</div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Hippocampal Enlargement Predicts Memory-Related PTSD Symptoms</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Garrison-Desany H, Denckla CA</div>
+          </div>
+          <div><div class="pub-status"><span>In Preparation</span></div></div>
+        </div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Thalamic Volume Shortly After Trauma Predicts Future Intrusive Memories</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Garrison-Desany H, Denckla CA</div>
+          </div>
+          <div><div class="pub-status"><span>In Preparation</span></div></div>
+        </div>
+    <div class="pub-item in-prep">
+          <div>
+            <div class="pub-title-plain">Limbic Structure Volumes Predict Neurological, but Not Psychiatric, Symptoms in Women Exposed to Intimate Partner Violence</div>
+            <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Valera EM</div>
+          </div>
+          <div><div class="pub-status"><span>In Preparation</span></div></div>
+        </div>
     <div class="pub-item in-prep">
       <div>
-        <div class="pub-title-plain">Expanding Neuroscience and Society Engagement: A Pilot Survey of R1 Neuroscience Principal Investigators</div>
-        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Person K, Kennedy Person, Tobel TW, Shen FX</div>
-      </div>
-      <div><div class="pub-status"><span>Submitted to Neuron</span></div></div>
-    </div>
-    <div class="pub-item in-prep">
-      <div>
-        <div class="pub-title-plain">Adult Patient Perspectives on Psychiatric Polygenic Risk Scores</div>
-        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Merner AR, Trotter PM, Martinez AC, Soda T, Storch EA, Pereira S, L&aacute;zaro-Mu&ntilde;oz G</div>
+        <div class="pub-title-plain">Neuroscience and Emerging Adult Justice Programs in the United States</div>
+        <div class="pub-authors">Lian D, Kandeshwarth R, <span class="pub-me">McFarland CW</span>, Shen FX</div>
       </div>
       <div><div class="pub-status"><span>In Preparation</span></div></div>
-    </div>
-  </div>
-  <div class="pub-item in-prep">
-  <div>
-    <div class="pub-title-plain">Non-Invasive Neurotechnology for Psychiatric Diagnosis: A Scoping Review of Ethical, Legal, and Societal Issues</div>
-    <div class="pub-authors"><span class="pub-me">McFarland CW</span></div>
-  </div>
-  <div><div class="pub-status"><span>In Preparation</span></div></div>
 </div>
-<div class="pub-item in-prep">
-  <div>
-    <div class="pub-title-plain">Neuroscience and Emerging Adult Justice Programs in the United States</div>
-    <div class="pub-authors"><span class="pub-me">McFarland CW</span></div>
-  </div>
-  <div><div class="pub-status"><span>In Preparation</span></div></div>
+    <div class="pub-item in-prep">
+      <div>
+        <div class="pub-title-plain">Innovating Judicial Education in Neuroscience: Lessons from a Co-Created Pilot Program</div>
+        <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Shen FX</div>
+      </div>
+      <div><div class="pub-status"><span>In Preparation</span></div></div>
 </div>
-<div class="pub-item in-prep">
-  <div>
-    <div class="pub-title-plain">Considering the Impacts of Psychiatric Medications on Identity, Agency, and Selfhood in Mental Health</div>
-    <div class="pub-authors"><span class="pub-me">McFarland CW</span></div>
   </div>
-  <div><div class="pub-status"><span>Under Review</span></div></div>
-</div>
-<div class="pub-item in-prep">
-  <div>
-    <div class="pub-title-plain">Innovating Judicial Education in Neuroscience: Lessons from a Co-Created Pilot Program</div>
-    <div class="pub-authors"><span class="pub-me">McFarland CW</span>, Shen FX</div>
-  </div>
-  <div><div class="pub-status"><span>In Preparation</span></div></div>
-</div>
 </section>
 
 <div class="divider"></div>
@@ -654,14 +675,19 @@ footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(-
   <div class="section-label reveal">Select Awards &amp; Honors</div>
   <div class="awards-grid">
     <div class="award-card reveal">
+      <div class="award-year">2026 &middot; Society for Research in Psychopathology</div>
+      <div class="award-title">President&rsquo;s Award</div>
+      <div class="award-body">Awarded by the Society for Research in Psychopathology.</div>
+    </div>
+    <div class="award-card reveal">
       <div class="award-year">2026 &middot; Oxford</div>
       <div class="award-title"> Qualifying Exam Prize</div>
       <div class="award-body">Recognized by Board of Examiners for strongest overall performance in the Oxford Neuroscience examinations.</div>
     </div>
     <div class="award-card reveal">
       <div class="award-year">2026 &middot; International Neuroethics Society</div>
-      <div class="award-title">Top Abstract Award (3&times;)</div>
-      <div class="award-body">Three abstracts recognized with a Top Abstract Award at International Neuroethics Society Annual Meeting, Lucca, Italy.</div>
+      <div class="award-title">Top Abstract Award (2&times;)</div>
+      <div class="award-body">Two abstracts selected among the top 15 abstracts across the hundreds submitted to the International Neuroethics Society Annual Meeting, Lucca, Italy.</div>
     </div>
     <div class="award-card reveal">
       <div class="award-year">2025 &middot; Oxford</div>
